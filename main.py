@@ -125,10 +125,10 @@ def main():
 
     search_term = input("Enter the search term you would like to analyze user sentiment for:\n")
     post_list = search(client, search_term)
-    print(post_list)
+    # print(post_list)
 
     stemmed_list = [stemming(post) for post in post_list]
-    print(stemmed_list)
+    # print(stemmed_list)
 
     X_new = vectorizer.transform(stemmed_list)
     predictions = model.predict(X_new)
@@ -137,15 +137,18 @@ def main():
     negative_posts = np.sum(predictions == 0)
     positive_percentage = (positive_posts / total_posts) * 100
     negative_percentage = (negative_posts / total_posts) * 100
-    print(f"\nSentiment Analysis Results:")
-    print(f"Total posts analyzed: {total_posts}")
-    print(f"Positive posts: {positive_posts} ({positive_percentage:.2f}%)")
-    print(f"Negative posts: {negative_posts} ({negative_percentage:.2f}%)")
+
     # If you want to see individual predictions
     for post, prediction in zip(post_list, predictions):
         sentiment = "Positive" if prediction == 1 else "Negative"
         print(f"\nPost: {post}")  # Print first 100 characters of post
         print(f"Sentiment: {sentiment}")
+
+    print(f"\nSentiment Analysis Results:")
+    print(f"Total posts analyzed: {total_posts}")
+    print(f"Positive posts: {positive_posts} ({positive_percentage:.2f}%)")
+    print(f"Negative posts: {negative_posts} ({negative_percentage:.2f}%)")
+
 
 
 
